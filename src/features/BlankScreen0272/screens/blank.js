@@ -1,23 +1,72 @@
-import React from "react";
-import { View, Image, ImageBackground } from "react-native";
-import { withStyles, Text, Button, CheckBox, Radio, Toggle, Icon, Input, Datepicker } from 'react-native-ui-kitten';
-import Slider from '@react-native-community/slider';
-import { SlideMenuIcon } from "../../../navigator/slideMenuIcon"
+import React, { Component } from 'react'
+import {
+  AppRegistry,
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  TextInput
+} from 'react-native'
 
-export class _Blank extends React.Component {
-  static navigationOptions = ({ navigation }) => {
-    return {
-      headerLeft: <SlideMenuIcon navigationProps={navigation} />,
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: ''
     };
-  };
+  }
+  
+  welcomeUser(name) {
+    if (name) {
+      return <Text style={styles.text}>Hello {name}!</Text>;
+    }
+  }
 
-  state = { }
-
-  render = () => <View style={this.props.themedStyle.container}></View>;
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.welcome}>
+          My App
+        </Text>
+        <Text style={styles.text}>
+          Enter your name!
+        </Text>
+        <TextInput
+          style={styles.input}
+          value={this.state.name}
+          onChangeText={(text) => this.setState({ name: text })}
+        />
+        {this.welcomeUser(this.state.name)}
+      </View>
+    )
+  }
 }
 
-export default Blank = withStyles(_Blank, theme => ({
+const styles = StyleSheet.create({
   container: {
-    backgroundColor: theme["color-basic-100"]
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FC9F',
+  },
+  welcome: {
+    fontSize: 24,
+    textAlign: 'center',
+    color: 'rgb(97, 218, 251)'
+  },
+  text: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 20
+  },
+  input: {
+    height: 40,
+    borderColor: 'lightgrey',
+    borderWidth: 4,
+    width: 150,
+    fontSize: 10,
+    padding: 8
   }
-}));
+})
+
+AppRegistry.registerComponent('App', () => App)
